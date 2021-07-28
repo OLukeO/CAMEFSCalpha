@@ -21,6 +21,6 @@ class AuthController extends Controller
             return ['error' => 'error-text'];
         }
 
-        return ['token']; //缺make token method
+        return ['token' => $user->createToken($request->password)->plainTextToken];
     }
 }
