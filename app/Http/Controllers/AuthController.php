@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function user_login(Request $request): array
     {
         $request->validate([
             'user' => 'required',
@@ -21,6 +21,17 @@ class AuthController extends Controller
             return ['error' => 'error-text'];
         }
 
-        return ['token' => $user->createToken($request->password)->plainTextToken];
+        return ['token' => $user->createToken('token')->plainTextToken];
+    }
+
+    public function guests_login(): array
+    {
+        return ['token' => "aaaa"];
+    }
+
+    public function revoke_token(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([],204);
     }
 }

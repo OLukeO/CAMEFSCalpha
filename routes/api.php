@@ -15,9 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
+//Route::get('/user', function (Request $request) {
+//    return $request;
 //});
 
-Route::middleware('api')->post('/login', [AuthController::class, 'login']);
+Route::prefix('login')->middleware('api')->group(function(){
+    Route::get('/', [AuthController::class, 'guests_login']);
+    Route::post('/', [AuthController::class, 'user_login']);
+});
+
+Route::middleware('api')->post('/logout', [AuthController::class, 'revoke_token']);
+
 
