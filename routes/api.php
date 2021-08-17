@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::prefix('login')->middleware('api')->group(function(){
-    Route::get('/', [AuthController::class, 'guests_login']);
-    Route::post('/', [AuthController::class, 'user_login']);
+    Route::post('/tourist', [AuthController::class, 'tourist_login']);
+    Route::post('/user', [AuthController::class, 'user_login']);
 });
 
 Route::middleware('api')->post('/logout', [AuthController::class, 'revoke_token']);

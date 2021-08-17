@@ -8,25 +8,34 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function user_login(Request $request): array
+    public function user_login(Request $request)
     {
         $request->validate([
-            'user' => 'required',
+            'sidimei' => 'required',
             'password' => 'required',
         ]);
 
-        $user = User::where('user', $request->user)->first();
+        $user = User::where('sidimei', $request->sidimei)->first();
 
         if (!$user || $user->password != $request->password) {
-            return ['error' => 'error-text'];
+            return response()->json(['error'=>'Unauthorised'], 401);
         }
 
-        return ['token' => $user->createToken('token')->plainTextToken];
+        return ['token' => $user->createToken('token')->plainTextToken, 'role' => $user->role,
+            'name' => $user->name, 'uid' => $user->id];
     }
 
-    public function guests_login(): array
+    public function tourist_login(Request $request)
     {
-        return ['token' => "aaaa"];
+        $request->validate([
+            'sidimei' => 'required',
+            'role' => 'required',
+            'name' => 'required',
+        ]);
+
+        $tourist = User::create(['sidimei' => $request->sidimei, 'role' => $request->role, 'name' =>$request->name]);
+
+        return ['token' => $tourist->createToken('token')->plainTextToken];
     }
 
     public function revoke_token(Request $request): \Illuminate\Http\JsonResponse
