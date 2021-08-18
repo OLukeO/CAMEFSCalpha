@@ -21,8 +21,14 @@ class AuthController extends Controller
             return response()->json(['error'=>'Unauthorised'], 401);
         }
 
-        return ['token' => $user->createToken('token')->plainTextToken, 'role' => $user->role,
-            'name' => $user->name, 'uid' => $user->id];
+        $token = $user->createToken('token')->plainTextToken;
+        $user->update(['token'=>$token]);
+
+        return ['token' => $token,
+                'role' => $user->role,
+                'name' => $user->name,
+                'uid' => $user->id
+                ];
     }
 
     public function tourist_login(Request $request): array

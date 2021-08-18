@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SafewayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,8 @@ Route::prefix('login')->middleware('api')->group(function(){
 
 Route::middleware('api')->post('/logout', [AuthController::class, 'revoke_token']);
 
-
+Route::prefix('monitor')->middleware('api')->group(function (){
+    Route::post('/start', [SafewayController::class, 'start_monitor']);
+    Route::post('/end', [SafewayController::class, 'end_monitor']);
+    Route::post('/sos', [SafewayController::class, 'sos']);
+});
