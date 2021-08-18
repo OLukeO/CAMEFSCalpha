@@ -35,18 +35,26 @@ class AuthController extends Controller
     {
         $request->validate([
             'sidimei' => 'required|string',
-            'role' => 'required|string',
-            'name' => 'required',
+            'role' => 'required|string', //可移除?
+            'name' => 'required', //可以除?
         ]);
 
-        $tourist = User::create(['sidimei' => $request->sidimei, 'role' => $request->role, 'name' =>$request->name]);
+        $tourist = User::create(['sidimei' => $request->sidimei,
+            'role' => $request->role,
+            'name' =>$request->name]);
 
         return ['token' => $tourist->createToken('token')->plainTextToken];
     }
 
-    public function revoke_token(Request $request): \Illuminate\Http\JsonResponse
+    public function revoke_token(Request $request): array
     {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json([],204);
+        $request->validate([
+            'sidimei' => 'required|string',
+        ]);
+
+        $user = User::where('sidimei', $request->sidimei)->first();
+        $user->update(['token'=>'']);
+        //$request->user()->currentAccessToken()->delete();
+        return ['text' => 'logout!'];
     }
 }
