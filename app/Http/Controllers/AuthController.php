@@ -11,8 +11,8 @@ class AuthController extends Controller
     public function user_login(Request $request)
     {
         $request->validate([
-            'sidimei' => 'required',
-            'password' => 'required',
+            'sidimei' => 'required|string',
+            'password' => 'required|string',
         ]);
 
         $user = User::where('sidimei', $request->sidimei)->first();
@@ -25,11 +25,11 @@ class AuthController extends Controller
             'name' => $user->name, 'uid' => $user->id];
     }
 
-    public function tourist_login(Request $request)
+    public function tourist_login(Request $request): array
     {
         $request->validate([
-            'sidimei' => 'required',
-            'role' => 'required',
+            'sidimei' => 'required|string',
+            'role' => 'required|string',
             'name' => 'required',
         ]);
 
