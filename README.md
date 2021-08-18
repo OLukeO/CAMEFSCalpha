@@ -5,6 +5,8 @@
 - user database
 - database
 
-  DB_DATABASE:CAMEFS
-  DB_USERNAME:root
-  DB_PASSWORD:root
+
+##8/19
+
+- safeway controller
+- ibeacon location database
