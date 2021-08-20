@@ -18,9 +18,9 @@ class CreateIbeaconLocationTable extends Migration
             $table->id();
             $table->Integer('major');
             $table->Integer('minor');
-            $table->decimal('lan', 10, 4);
+            $table->decimal('lan', 10, 4); //點出的位置, 非beacon位置
             $table->decimal('lng', 10, 4);
-            $table->string('uuid')->unique();
+            $table->string('uuid');
         });
     }
 
