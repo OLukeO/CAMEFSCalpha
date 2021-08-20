@@ -8,7 +8,7 @@ use App\Models\IbeaconLocation;
 use App\Models\HistoryLocation;
 use App\Models\Monitoring;
 
-class SafewayController extends Controller //好像需要加狀態1, 2
+class SafewayController extends Controller
 {
     public function start_monitor(Request $request)
     {
@@ -26,9 +26,13 @@ class SafewayController extends Controller //好像需要加狀態1, 2
         $ibeacon = IbeaconLocation::where('major', $request->major)->first();
         $is_monitoring = Monitoring::where('uid', $request->uid)->first();
 
-        if (!$user || $request->apitoken != $user->token || !$ibeacon) // token認證
+        if (!$user || $request->apitoken != $user->token || $user->role == 0) // token認證
         {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'User does not exist or Authentication error'], 401);
+        }
+        if (!$ibeacon)
+        {
+            return response()->json(['error' => 'Ibeacon does not exist'], 401);
         }
 
         if ($is_monitoring) {
@@ -74,6 +78,5 @@ class SafewayController extends Controller //好像需要加狀態1, 2
 
         $is_monitor = Monitoring::where('uid', $request->uid);
         $is_monitor->update(['sos' => 1]);
-        //return 0; //改為求救狀態
     }
 }

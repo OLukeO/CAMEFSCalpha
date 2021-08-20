@@ -18,7 +18,7 @@ class AuthController extends Controller
         $user = User::where('sidimei', $request->sidimei)->first();
 
         if (!$user || $user->password != $request->password) {
-            return response()->json(['error'=>'Unauthorised'], 401);
+            return response()->json(['error'=>'User does not exist or Wrong password'], 401);
         }
 
         $token = $user->createToken('token')->plainTextToken;
@@ -35,15 +35,15 @@ class AuthController extends Controller
     {
         $request->validate([
             'sidimei' => 'required|string',
-            'role' => 'required|string', //可移除?
-            'name' => 'required', //可以除?
         ]);
 
-        $tourist = User::create(['sidimei' => $request->sidimei,
-            'role' => $request->role,
-            'name' =>$request->name]);
+        if (User::where('sidimei', $request->sidimei)->first()) {
+            return ['error'=>'sidimei already exist'];
+        }
 
-        return ['token' => $tourist->createToken('token')->plainTextToken];
+        $tourist = User::create(['sidimei' => $request->sidimei]);
+
+        return ['token' => $tourist->createToken('token')->plainTextToken]; // 不用?
     }
 
     public function revoke_token(Request $request): array
@@ -54,7 +54,7 @@ class AuthController extends Controller
 
         $user = User::where('sidimei', $request->sidimei)->first();
         $user->update(['token'=>'']);
-        //$request->user()->currentAccessToken()->delete();
+
         return ['text' => 'logout!'];
     }
 }

@@ -16,8 +16,7 @@ class CreateHistoryLocationTable extends Migration
         Schema::create('history_location', function (Blueprint $table)
         {
             $table->id();
-            $table->string('uid'); //感覺用學號紀錄比較好
-            //$table->string('logtime'); timestamps即可
+            $table->string('uid');
             $table->string('rssi');
             $table->string('distance');
             $table->string('txpower');

@@ -13,7 +13,7 @@ class CreateIbeaconLocationTable extends Migration
      */
     public function up()
     {
-        Schema::create('ibeacon_location', function (Blueprint $table) //是否可傳uuid?
+        Schema::create('ibeacon_location', function (Blueprint $table)
         {
             $table->id();
             $table->Integer('major');

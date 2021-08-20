@@ -10,9 +10,9 @@ class IbeaconLocation extends Model
     use HasFactory;
 
     protected $table = 'ibeacon_location';
-    public $primaryKey = 'uuid';
+    public $primaryKey = 'id';
 
     protected $guarded = [
-        'id', 'major', 'minor', 'lan', 'lng',
+        'id', 'major', 'minor', 'lan', 'lng', 'uuid'
     ];
 }

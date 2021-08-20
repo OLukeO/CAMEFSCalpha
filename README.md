@@ -6,7 +6,12 @@
 - database
 
 
-##8/19
+## 8/19
 
 - safeway controller
 - ibeacon location database
+
+
+## 8/20
+
+- safeway controller complete

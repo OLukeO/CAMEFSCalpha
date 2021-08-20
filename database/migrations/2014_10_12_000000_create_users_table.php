@@ -15,12 +15,11 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id(); //UID
-            $table->Integer('role')->default(1);
+            $table->Integer('role')->default(0);
             $table->string('sidimei')->unique();
             $table->string('password')->default('');
-            $table->text('name');
+            $table->string('name')->default('tourist');
             $table->string('token')->default('');
-            $table->string('datetime')->default(''); //感覺不用
             $table->timestamps();
         });
     }
