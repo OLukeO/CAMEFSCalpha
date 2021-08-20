@@ -4,23 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHistoryLocationTable extends Migration
+class CreateMonitoringTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     *正在使用安全通道
      * @return void
      */
     public function up()
     {
-        Schema::create('history_location', function (Blueprint $table)
+        Schema::create('monitoring', function (Blueprint $table)
         {
             $table->id();
-            $table->string('uid'); //感覺用學號紀錄比較好
-            //$table->string('logtime'); timestamps即可
-            $table->string('rssi');
-            $table->string('distance');
-            $table->string('txpower');
+            $table->string('uid')->unique();
+            $table->decimal('lan', 10, 4);
+            $table->decimal('lng', 10, 4);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateHistoryLocationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('history_location');
+        Schema::dropIfExists('monitoring');
     }
 }

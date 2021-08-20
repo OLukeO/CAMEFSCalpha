@@ -8,7 +8,7 @@ class CreatePersonalAccessTokensTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * //移除?
      * @return void
      */
     public function up()
