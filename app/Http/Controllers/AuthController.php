@@ -24,10 +24,10 @@ class AuthController extends Controller
         $token = $user->createToken('token')->plainTextToken;
         $user->update(['token'=>$token]);
 
-        return ['token' => $token,
-                'role' => $user->role,
+        return ['uid' => $user->id,
                 'name' => $user->name,
-                'uid' => $user->id
+                'role' => $user->role,
+                'token' => $token,
                 ];
     }
 

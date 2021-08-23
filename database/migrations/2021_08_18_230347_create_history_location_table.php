@@ -17,6 +17,7 @@ class CreateHistoryLocationTable extends Migration
         {
             $table->id();
             $table->string('uid');
+            $table->string('state')->default('null');
             $table->string('rssi');
             $table->string('distance');
             $table->string('txpower');

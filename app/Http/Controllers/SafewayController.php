@@ -22,11 +22,12 @@ class SafewayController extends Controller
             'apitoken' => 'required|string',
         ]);
 
-        $user = User::where('id', $request->uid)->first();
-        $ibeacon = IbeaconLocation::where('major', $request->major)->first();
-        $is_monitoring = Monitoring::where('uid', $request->uid)->first();
+        $user = User::where('id', $request->get('uid'))->first();
+        $ibeacon = IbeaconLocation::where('major', $request->get('major'))->first(); //改
+        //$ibeacon=IbeaconLocation::select("select * from IbeaconLocation where major = $request->get('major') and minor = $request->get('minor')");
+        $is_monitoring = Monitoring::where('uid', $request->get('uid'))->first();
 
-        if (!$user || $request->apitoken != $user->token || $user->role == 0) // token認證
+        if (!$user || $request->apitoken != $user->token || $user->role == 0)
         {
             return response()->json(['error' => 'User does not exist or Authentication error'], 401);
         }
@@ -48,35 +49,64 @@ class SafewayController extends Controller
             ]);
         }
 
-        //紀錄位置(純紀錄, 沒用)
+        //紀錄位置(紀錄)
         HistoryLocation::create([
             'uid' => $user->id,
-            'rssi' => $request->rssi,
-            'distance' => $request->distance,
-            'txpower' => $request->txpower,
+            'state' => 'start',
+            'rssi' => $request->get('rssi'),
+            'distance' => $request->get('distance'),
+            'txpower' => $request->get('txpower'),
         ]);
 
-        return null;
+        return response()->json(['success' => 'ok']);
     }
 
 
-    public function end_monitor(Request $request) //確認關閉app會call此api
+    public function end_monitor(Request $request)
     {
         $request->validate([
             'uid' => 'required',
+            'rssi' => 'required|string',
+            'distance' => 'required|string',
+            'txpower' => 'required|string',
         ]);
 
-        $is_monitor = Monitoring::where('uid', $request->uid);
+        HistoryLocation::create([
+            'uid' => $request->get('uid'),
+            'state' => 'end',
+            'rssi' => $request->get('rssi'),
+            'distance' => $request->get('distance'),
+            'txpower' => $request->get('txpower'),
+        ]);
+
+        $is_monitor = Monitoring::where('uid', $request->get('uid'))->first();
+        if (!$is_monitor) return response()->json(['error' => 'cant not find uid or User is not monitoring'], 401);
         $is_monitor->delete();
+
+        return response()->json(['success' => 'ok']);
     }
 
     public function sos(Request $request)
     {
         $request->validate([
             'uid' => 'required',
+            'rssi' => 'required|string',
+            'distance' => 'required|string',
+            'txpower' => 'required|string',
         ]);
 
-        $is_monitor = Monitoring::where('uid', $request->uid);
+        HistoryLocation::create([
+            'uid' => $request->get('uid'),
+            'state' => 'sos',
+            'rssi' => $request->get('rssi'),
+            'distance' => $request->get('distance'),
+            'txpower' => $request->get('txpower'),
+        ]);
+
+        $is_monitor = Monitoring::where('uid', $request->get('uid'))->first();
+        if (!$is_monitor) return response()->json(['error' => 'cant not find uid or User is not monitoring'], 401);
         $is_monitor->update(['sos' => 1]);
+
+        return response()->json(['success' => 'ok']);
     }
 }
