@@ -7,10 +7,11 @@ use App\Models\User;
 use App\Models\IbeaconLocation;
 use App\Models\HistoryLocation;
 use App\Models\Monitoring;
+use Illuminate\Http\JsonResponse;
 
 class SafewayController extends Controller
 {
-    public function start_monitor(Request $request)
+    public function start_monitor(Request $request): JsonResponse
     {
         $request->validate([
             'uid' => 'required',
@@ -24,15 +25,12 @@ class SafewayController extends Controller
 
         $user = User::where('id', $request->get('uid'))->first();
         $ibeacon = IbeaconLocation::where('major', $request->get('major'))->first(); //改
-        //$ibeacon=IbeaconLocation::select("select * from IbeaconLocation where major = $request->get('major') and minor = $request->get('minor')");
         $is_monitoring = Monitoring::where('uid', $request->get('uid'))->first();
 
-        if (!$user || $request->apitoken != $user->token || $user->role == 0)
-        {
+        if (!$user || $request->apitoken != $user->token || $user->role == 0) {
             return response()->json(['error' => 'User does not exist or Authentication error'], 401);
         }
-        if (!$ibeacon)
-        {
+        if (!$ibeacon) {
             return response()->json(['error' => 'Ibeacon does not exist'], 401);
         }
 
@@ -62,7 +60,8 @@ class SafewayController extends Controller
     }
 
 
-    public function end_monitor(Request $request)
+
+    public function end_monitor(Request $request): JsonResponse
     {
         $request->validate([
             'uid' => 'required',
@@ -80,13 +79,13 @@ class SafewayController extends Controller
         ]);
 
         $is_monitor = Monitoring::where('uid', $request->get('uid'))->first();
-        if (!$is_monitor) return response()->json(['error' => 'cant not find uid or User is not monitoring'], 401);
+        if (!$is_monitor) return response()->json(['error' => 'can\'t not find uid or User is not monitoring'], 401);
         $is_monitor->delete();
 
         return response()->json(['success' => 'ok']);
     }
 
-    public function sos(Request $request)
+    public function sos(Request $request): JsonResponse
     {
         $request->validate([
             'uid' => 'required',
@@ -104,7 +103,7 @@ class SafewayController extends Controller
         ]);
 
         $is_monitor = Monitoring::where('uid', $request->get('uid'))->first();
-        if (!$is_monitor) return response()->json(['error' => 'cant not find uid or User is not monitoring'], 401);
+        if (!$is_monitor) return response()->json(['error' => 'can\'t not find uid or User is not monitoring'], 401);
         $is_monitor->update(['sos' => 1]);
 
         return response()->json(['success' => 'ok']);

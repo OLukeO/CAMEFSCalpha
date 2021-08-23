@@ -12,6 +12,6 @@ class Monitoring extends Model
     protected $table = 'monitoring';
 
     protected $fillable = [
-        'uid', 'lan', 'lng',
+        'uid', 'lan', 'lng', 'sos',
     ];
 }
