@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Monitoring;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -57,5 +58,21 @@ class AuthController extends Controller
         $user->update(['token'=>'']);
 
         return response()->json(['text' => 'logout!']);
+    }
+
+    public function admin_login()
+    {
+        return view('welcome');
+    }
+
+    public function do_admin_login(Request $request)
+    {
+        $user = User::where('sidimei', $request->get('sidimei'))->first();
+
+        if(!$user or $user->role != 99) return back()->with('error');
+        if(($request->get('password') != $user->password)) return back()->with('error');
+        $people = Monitoring::all();
+//        return view('home', compact('people'));
+        return $user;
     }
 }

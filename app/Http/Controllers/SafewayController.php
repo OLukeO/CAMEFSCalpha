@@ -113,6 +113,6 @@ class SafewayController extends Controller
     public function show()
     {
         $people = Monitoring::all();
-        return view('welcome', compact('people'));
+        return view('home', compact('people'));
     }
 }

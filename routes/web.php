@@ -14,4 +14,6 @@ use App\Http\Controllers;
 |
 */
 
-Route::get('/', [Controllers\SafewayController::class, 'show']);
+Route::get('/', [Controllers\AuthController::class, 'admin_login']);
+Route::post('/', [Controllers\AuthController::class, 'do_admin_login']);
+Route::middleware('auth:sanctum')->get('/home', [Controllers\SafewayController::class, 'show']);

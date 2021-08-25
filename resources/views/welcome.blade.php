@@ -8,16 +8,24 @@
     <title>welcome-test</title>
 </head>
 <body>
+<form action="{{ url('/') }}" method="post">
+    <table>
+        <tr>
+            @csrf
+            <label>
+                <input type="text" name="sidimei" value="學號">
+            </label>
+            <label>
+                <input type="text" name="password" value="密碼">
+            </label>
 
-@foreach($people as $p)
-    <tr>
-        <td>{{ $p->sidimei }}</td>
-        <td>{{ $p->name }}</td>
-        <td>{{ $p->lan }}</td>
-        <td>{{ $p->lng }}</td>
-        <td>{{ $p->sos }}</td>
-    </tr>
-@endforeach
+            <tr>
+                <td></td>
+                <td><input type="submit" value="提交"></td>
+            </tr>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>
