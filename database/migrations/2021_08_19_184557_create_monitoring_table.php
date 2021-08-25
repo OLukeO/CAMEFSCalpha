@@ -17,6 +17,8 @@ class CreateMonitoringTable extends Migration
         {
             $table->id();
             $table->string('uid')->unique();
+            $table->string('sidimei');
+            $table->string('name');
             $table->decimal('lan', 10, 4);
             $table->decimal('lng', 10, 4);
             $table->boolean('sos')->default('0');

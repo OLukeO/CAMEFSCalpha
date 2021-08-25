@@ -11,7 +11,8 @@
 
 @foreach($people as $p)
     <tr>
-        <td>{{ $p->uid }}</td>
+        <td>{{ $p->sidimei }}</td>
+        <td>{{ $p->name }}</td>
         <td>{{ $p->lan }}</td>
         <td>{{ $p->lng }}</td>
         <td>{{ $p->sos }}</td>

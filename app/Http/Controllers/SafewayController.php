@@ -42,6 +42,8 @@ class SafewayController extends Controller
         } else {
             Monitoring::create([
                 'uid' => $user->id,
+                'sidimei' => $user->sidimei,
+                'name' => $user->name,
                 'lan' => $ibeacon['lan'],
                 'lng' => $ibeacon['lng'],
             ]);
