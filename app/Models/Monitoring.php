@@ -14,4 +14,6 @@ class Monitoring extends Model
     protected $fillable = [
         'uid', 'lan', 'lng', 'sos',
     ];
+
+    public $timestamps = false;
 }

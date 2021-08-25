@@ -38,13 +38,13 @@ class AuthController extends Controller
             'sidimei' => 'required|string',
         ]);
 
-        if (User::where('sidimei', $request->get('sidimei'))->first()) {
-            return response()->json(['error'=>'sidimei already exist']);
-        }
+//        if (User::where('sidimei', $request->get('sidimei'))->first()) {
+//            return response()->json(['error'=>'sidimei already exist']);
+//        }
 
         $tourist = User::create(['sidimei' => $request->get('sidimei')]);
 
-        return response()->json(['token' => $tourist->createToken('token')->plainTextToken]); // 不用?
+        return response()->json(['token' => $tourist->createToken('token')->plainTextToken]);
     }
 
     public function revoke_token(Request $request): JsonResponse

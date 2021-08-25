@@ -20,7 +20,6 @@ class CreateMonitoringTable extends Migration
             $table->decimal('lan', 10, 4);
             $table->decimal('lng', 10, 4);
             $table->boolean('sos')->default('0');
-            $table->timestamps();
         });
     }
 

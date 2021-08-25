@@ -15,4 +15,6 @@ class IbeaconLocation extends Model
     protected $guarded = [
         'id', 'major', 'minor', 'lan', 'lng', 'uuid'
     ];
+
+
 }

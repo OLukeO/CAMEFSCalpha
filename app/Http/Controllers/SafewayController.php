@@ -20,14 +20,14 @@ class SafewayController extends Controller
             'rssi' => 'required|string',
             'distance' => 'required|string',
             'txpower' => 'required|string',
-            'apitoken' => 'required|string',
+            //'apitoken' => 'required|string',
         ]);
 
         $user = User::where('id', $request->get('uid'))->first();
         $ibeacon = IbeaconLocation::where('major', $request->get('major'))->first(); //改
         $is_monitoring = Monitoring::where('uid', $request->get('uid'))->first();
 
-        if (!$user || $request->apitoken != $user->token || $user->role == 0) {
+        if (!$user || $user->role == 0) {
             return response()->json(['error' => 'User does not exist or Authentication error'], 401);
         }
         if (!$ibeacon) {
@@ -47,7 +47,6 @@ class SafewayController extends Controller
             ]);
         }
 
-        //紀錄位置(紀錄)
         HistoryLocation::create([
             'uid' => $user->id,
             'state' => 'start',
@@ -107,5 +106,11 @@ class SafewayController extends Controller
         $is_monitor->update(['sos' => 1]);
 
         return response()->json(['success' => 'ok']);
+    }
+
+    public function show()
+    {
+        $people = Monitoring::all();
+        return view('welcome', compact('people'));
     }
 }
