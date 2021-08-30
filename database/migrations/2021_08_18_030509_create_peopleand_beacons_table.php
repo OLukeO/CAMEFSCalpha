@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHistoryLocationTable extends Migration
+class CreatePeopleandBeaconsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateHistoryLocationTable extends Migration
      */
     public function up()
     {
-        Schema::create('history_location', function (Blueprint $table) {
+        Schema::create('peopleandbeacons', function (Blueprint $table) {
             $table->id();
-            $table->string('uid');
-            $table->string('state')->default('null');
-            $table->string('major');
-            $table->string('minor');
+            $table->dateTime('logtime')->default(now());
+            $table->integer('beaconid');
             $table->string('rssi');
             $table->string('distance');
             $table->string('txpower');
-            $table->timestamps();
+            $table->integer('uid');
         });
     }
 
@@ -33,6 +31,6 @@ class CreateHistoryLocationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('history_location');
+        Schema::dropIfExists('peopleandbeacons');
     }
 }

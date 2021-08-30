@@ -13,6 +13,6 @@ class HistoryLocation extends Model
     //public $primaryKey = 'uid';
 
     protected $fillable = [
-        'uid', 'state', 'rssi', 'distance', 'txpower',
+        'uid', 'state', 'major', 'minor', 'rssi', 'distance', 'txpower',
     ];
 }

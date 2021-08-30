@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\IbeaconLocation;
 use App\Models\HistoryLocation;
+use App\Models\IbeaconLocation;
 use App\Models\Monitoring;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class SafewayController extends Controller
 {
@@ -52,6 +52,8 @@ class SafewayController extends Controller
         HistoryLocation::create([
             'uid' => $user->id,
             'state' => 'start',
+            'major' => $request->get('major'),
+            'minor' => $request->get('minor'),
             'rssi' => $request->get('rssi'),
             'distance' => $request->get('distance'),
             'txpower' => $request->get('txpower'),
@@ -59,8 +61,6 @@ class SafewayController extends Controller
 
         return response()->json(['success' => 'ok']);
     }
-
-
 
     public function end_monitor(Request $request): JsonResponse
     {
@@ -74,13 +74,17 @@ class SafewayController extends Controller
         HistoryLocation::create([
             'uid' => $request->get('uid'),
             'state' => 'end',
+            'major' => $request->get('major'),
+            'minor' => $request->get('minor'),
             'rssi' => $request->get('rssi'),
             'distance' => $request->get('distance'),
             'txpower' => $request->get('txpower'),
         ]);
 
         $is_monitor = Monitoring::where('uid', $request->get('uid'))->first();
-        if (!$is_monitor) return response()->json(['error' => 'can\'t not find uid or User is not monitoring'], 401);
+        if (!$is_monitor) {
+            return response()->json(['error' => 'can\'t not find uid or User is not monitoring'], 401);
+        }
         $is_monitor->delete();
 
         return response()->json(['success' => 'ok']);
@@ -98,14 +102,47 @@ class SafewayController extends Controller
         HistoryLocation::create([
             'uid' => $request->get('uid'),
             'state' => 'sos',
+            'major' => $request->get('major'),
+            'minor' => $request->get('minor'),
             'rssi' => $request->get('rssi'),
             'distance' => $request->get('distance'),
             'txpower' => $request->get('txpower'),
         ]);
 
         $is_monitor = Monitoring::where('uid', $request->get('uid'))->first();
-        if (!$is_monitor) return response()->json(['error' => 'can\'t not find uid or User is not monitoring'], 401);
+        if (!$is_monitor) {
+            return response()->json(['error' => 'can\'t not find uid or User is not monitoring'], 401);
+        }
         $is_monitor->update(['sos' => 1]);
+
+        return response()->json(['success' => 'ok']);
+    }
+
+    //結束sos
+    public function sos_end(Request $request): JsonResponse
+    {
+        $request->validate([
+            'uid' => 'required',
+            'rssi' => 'required|string',
+            'distance' => 'required|string',
+            'txpower' => 'required|string',
+        ]);
+
+        HistoryLocation::create([
+            'uid' => $request->get('uid'),
+            'state' => 'sosend',
+            'major' => $request->get('major'),
+            'minor' => $request->get('minor'),
+            'rssi' => $request->get('rssi'),
+            'distance' => $request->get('distance'),
+            'txpower' => $request->get('txpower'),
+        ]);
+
+        $is_monitor = Monitoring::where('uid', $request->get('uid'))->first();
+        if (!$is_monitor) {
+            return response()->json(['error' => 'can\'t not find uid or User is not monitoring'], 401);
+        }
+        $is_monitor->update(['sos' => 0]);
 
         return response()->json(['success' => 'ok']);
     }
@@ -113,6 +150,7 @@ class SafewayController extends Controller
     public function show()
     {
         $people = Monitoring::all();
+
         return view('home', compact('people'));
     }
 }
