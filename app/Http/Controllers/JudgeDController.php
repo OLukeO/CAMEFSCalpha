@@ -7,12 +7,16 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Attraction;
 use App\Models\Howmanypeople;
 use Illuminate\Http\JsonResponse;
+use Brick\Math\BigDecimal;
+
 
 class JudgeDController extends StoreController
 {
+    
     //執行儲存→判斷並回傳
     public function store(Request $request): JsonResponse
     {
+        //header("Content-type: application/json; charset=utf-8");
         $distance = $request->get('distance');
         $UID = $request->get('uid');
         //呼叫父類別的store function 並接收回傳值
@@ -27,7 +31,7 @@ class JudgeDController extends StoreController
     //判斷距離及是否回傳景點的function
     public function judge($distance, $beacon, $UID)
     {
-        //將變數distance更換型態(String->double),放入變數road
+        //將變數distance更換型態(String->int),放入變數road
         $road = (double)$distance;
         //當筆資料的BeaconID
         $BID = (int)$beacon;
@@ -36,15 +40,15 @@ class JudgeDController extends StoreController
         //前一筆資料的BeaconID
         $BID1 = (int)implode(' ', array_column($befBID, 'beaconid'));
         //如果沒有前一筆資料
-        if ($BID1 == null) {
+        if ($befBID == null) {
             $BID1 = 0;
         }
         //在peopleandbeacons的資料表中，使用倒敘的排法，並用UID 搜尋前一筆Distance資料(limit 由第幾筆開始顯示,抓幾筆)
         $befdistance = DB::select("select distance from peopleandbeacons where uid =$UID order by id desc limit 1,1");
         //前一筆資料的距離
-        $Distance = (int)implode(' ', array_column($befdistance, 'distance'));
+        $Distance = (double)implode(' ', array_column($befdistance, 'distance'));
         //如果沒有前一筆資料
-        if ($Distance == null) {
+        if ($befdistance == null) {
             $Distance = 100;
         }
         //查詢景點資料表中符合BeaconID值的資料放入變數
@@ -63,7 +67,7 @@ class JudgeDController extends StoreController
             return "not a attraction";
         } else {//現在這筆是景點
             //判斷距離小於等於15m
-            if ($road <= 15) {
+            if ($road <= 15.0 && $road>=0) {
                 //判斷前後兩次的BeaconID是否相同(不同回傳變數scene,相同回傳字串same position)
                 if ($BID != $BID1) {
                     //當下景點人數+1
@@ -73,11 +77,11 @@ class JudgeDController extends StoreController
                     return $scene;
                 }
                 //在同個beacon範圍內，上次距離超過15m
-                else if ($BID == $BID1 && $Distance > 15) {
+                else if ($BID == $BID1 && $Distance > 15.0) {
                     //當下景點人數+1
                     $this->humanplus($nowAID,$nowpeople);
                     return $scene;
-                } else {//在同個beacon範圍內，上次距離<15m
+                }else{
                     return "same position";
                 }
             } else {//當前在景點位置距離大於15m
