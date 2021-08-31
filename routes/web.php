@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/123', function () {
     return view('attract.create');
 });*/
-Route::resource('456', 'App\Http\Controllers\InterfaceloginController');
+Route::get('safeway', [Controllers\safewayController::class, 'show']);
 
 Route::get('/', [Controllers\AuthController::class, 'admin_login']);
 Route::post('/map', [Controllers\AuthController::class, 'do_admin_login']);
