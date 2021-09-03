@@ -8,19 +8,19 @@ class CreateMonitoringTable extends Migration
 {
     /**
      * Run the migrations.
-     *正在使用安全通道
+     *正在使用安全通道.
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('monitoring', function (Blueprint $table)
-        {
+        Schema::create('monitoring', function (Blueprint $table) {
             $table->id();
             $table->string('uid')->unique();
             $table->string('sidimei');
             $table->string('name');
-            $table->decimal('lan', 10, 4);
-            $table->decimal('lng', 10, 4);
+            $table->decimal('lat', 10, 6);
+            $table->decimal('lng', 10, 6);
             $table->boolean('sos')->default('0');
         });
     }

@@ -13,8 +13,6 @@ class IbeaconLocation extends Model
     public $primaryKey = 'id';
 
     protected $guarded = [
-        'id', 'major', 'minor', 'lan', 'lng', 'uuid'
+        'id', 'major', 'minor', 'lat', 'lng', 'uuid',
     ];
-
-
 }

@@ -13,13 +13,12 @@ class CreateIbeaconLocationTable extends Migration
      */
     public function up()
     {
-        Schema::create('ibeacon_location', function (Blueprint $table)
-        {
+        Schema::create('ibeacon_location', function (Blueprint $table) {
             $table->id();
             $table->Integer('major');
             $table->Integer('minor');
-            $table->decimal('lan', 10, 4); //點出的位置, 非beacon位置
-            $table->decimal('lng', 10, 4);
+            $table->decimal('lat', 10, 6); //點出的位置, 非beacon位置
+            $table->decimal('lng', 10, 6);
             $table->string('uuid');
         });
     }

@@ -36,7 +36,7 @@ class SafewayController extends Controller
 
         if ($is_monitoring) {
             $is_monitoring->update([
-                'lan' => $ibeacon['lan'],
+                'lat' => $ibeacon['lat'],
                 'lng' => $ibeacon['lng'],
             ]);
         } else {
@@ -44,7 +44,7 @@ class SafewayController extends Controller
                 'uid' => $user->id,
                 'sidimei' => $user->sidimei,
                 'name' => $user->name,
-                'lan' => $ibeacon['lan'],
+                'lat' => $ibeacon['lat'],
                 'lng' => $ibeacon['lng'],
             ]);
         }

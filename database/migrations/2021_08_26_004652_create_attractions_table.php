@@ -16,13 +16,13 @@ class CreateAttractionsTable extends Migration
         Schema::create('attractions', function (Blueprint $table) {
             $table->id();
             $table->integer('beaconid');
-            $table->decimal('lat', 10, 4);
-            $table->decimal('lng', 10, 4);
-            $table->string('viewname',32);
-            $table->string('note',1024);
-            $table->string('image',255);
-            $table->string('url',255);
-            $table->datetime('logtime')->default(now());;
+            $table->decimal('lat', 10, 6);
+            $table->decimal('lng', 10, 6);
+            $table->string('viewname', 32);
+            $table->string('note', 1024);
+            $table->string('image', 255);
+            $table->string('url', 255);
+            $table->datetime('logtime')->default(now());
             $table->integer('peoplenumber');
         });
     }
