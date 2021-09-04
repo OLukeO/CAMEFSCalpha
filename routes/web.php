@@ -17,7 +17,16 @@ use Illuminate\Support\Facades\Route;
     return view('attract.create');
 });*/
 Route::get('safeway', [Controllers\safewayController::class, 'show']);
+Route::resource('places', 'App\Http\Controllers\PlaceController');
+Route::resource('photos', 'App\Http\Controllers\PhotoController');
+Route::resource('beacons', 'App\Http\Controllers\IbeaconController');
 
 Route::get('/', [Controllers\AuthController::class, 'admin_login']);
 Route::post('/map', [Controllers\AuthController::class, 'do_admin_login']);
 Route::middleware('auth:sanctum')->get('/home', [Controllers\SafewayController::class, 'show']);
+
+Route::resource('peoples', 'App\Http\Controllers\PeopleController');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
