@@ -19,27 +19,27 @@
 
 
                 <div class="form-group">
-                    <label for="input">Beacon的Major</label>
+                    <label for="major">Beacon的Major</label>
                     <input type="text" class="form-control" name="major" />
                 </div>
 
                 <div class="form-group">
-                    <label for="input">Beacon的Minor</label>
+                    <label for="minor">Beacon的Minor</label>
                     <input type="text" class="form-control" name="minor" />
                 </div>
 
                 <div class="form-group">
-                    <label for="input">Beacon所在緯度</label>
+                    <label for="lat">Beacon所在緯度</label>
                     <input type="double" class="form-control" name="lat" />
                 </div>
 
                 <div class="form-group">
-                    <label for="input">Beacon所在經度</label>
+                    <label for="lng">Beacon所在經度</label>
                     <input type="double" class="form-control" name="lng" />
                 </div>
 
                 <div class="form-group">
-                    <label for="input">Beacon的UUID</label>
+                    <label for="uuid">Beacon的UUID</label>
                     <input type="text" class="form-control" name="uuid" />
                 </div>
 

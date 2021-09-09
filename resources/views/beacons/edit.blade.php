@@ -18,27 +18,27 @@
             @csrf
             <div class="form-group">
                 <label for="name">Beacon的Major</label>
-                <input type="text" class="form-control" name="major" />
+                <input type="text" class="form-control" name="major" value={{ $beacons->major }} />
             </div>
 
             <div class="form-group">
                 <label for="input">Beacon的Minor</label>
-                <input type="text" class="form-control" name="minor" />
+                <input type="text" class="form-control" name="minor" value={{ $beacons->minor }} />
             </div>
 
             <div class="form-group">
                 <label for="input">Beacon所在緯度</label>
-                <input type="integer" class="form-control" name="lat" />
+                <input type="integer" class="form-control" name="lat" value={{ $beacons->lat }} />
             </div>
 
             <div class="form-group">
                 <label for="input">Beacon所在經度</label>
-                <input type="text" class="form-control" name="lng" />
+                <input type="text" class="form-control" name="lng" value={{ $beacons->lng }} />
             </div>
 
             <div class="form-group">
                 <label for="input">Beacon的UUID</label>
-                <input type="text" class="form-control" name="uuid" />
+                <input type="text" class="form-control" name="uuid" value={{ $beacons->uuid }} />
             </div>
 
 

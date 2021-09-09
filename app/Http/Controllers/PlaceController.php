@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attraction;
+use App\Models\IbeaconLocation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlaceController extends Controller
 {
@@ -15,12 +17,9 @@ class PlaceController extends Controller
     public function index()
     {
         $places = Attraction::all();
+        $beacons = IbeaconLocation::all();
 
-        return view('places.index', compact('places'));
-
-        $places = Attraction::all();
-
-        return view('places.userview', compact('places'));
+        return view('places.index', compact('places', 'beacons'));
     }
 
     /**
@@ -30,7 +29,10 @@ class PlaceController extends Controller
      */
     public function create()
     {
-        return view('places.create');
+        $places = Attraction::all();
+        $beacons = IbeaconLocation::all();
+
+        return view('places.create', compact('places', 'beacons'));
     }
 
     /**
@@ -40,9 +42,15 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
+        $Major = $request->get('major');
+        $ALL = str_split($Major, 5);
+        $Major = (int) $ALL[0];
+        $Minor = (int) $ALL[1];
+        $BeaconIDdata = DB::select("select * from ibeacon_location where major =$Major and minor =$Minor");
+        $Beaconstring = implode(' ', array_column($BeaconIDdata, 'id'));
+
         $request->validate([
-            'peoplenumber' => 'required',
-            'beaconid' => 'required',
+            'major' => 'required',
             'lat' => 'required',
             'lng' => 'required',
             'viewname' => 'required',
@@ -53,8 +61,7 @@ class PlaceController extends Controller
 
         // * 更新對應欄位
         $place = new Attraction([
-            'peoplenumber' => $request->get('peoplenumber'),
-            'beaconid' => $request->get('beaconid'),
+            'beaconid' => $Beaconstring,
             'lat' => $request->get('lat'),
             'lng' => $request->get('lng'),
             'viewname' => $request->get('viewname'),
@@ -89,8 +96,9 @@ class PlaceController extends Controller
     public function edit($id)
     {
         $place = Attraction::find($id);
+        $beacons = IbeaconLocation::all();
 
-        return view('places.edit', compact('place'));
+        return view('places.edit', compact('place', 'beacons'));
     }
 
     /**
@@ -102,9 +110,15 @@ class PlaceController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $Major = $request->get('major');
+        $ALL = str_split($Major, 5);
+        $Major = (int) $ALL[0];
+        $Minor = (int) $ALL[1];
+        $BeaconIDdata = DB::select("select * from ibeacon_location where major =$Major and minor =$Minor");
+        $Beaconstring = implode(' ', array_column($BeaconIDdata, 'id'));
+
         $request->validate([
-            'peoplenumber' => 'required',
-            'beaconid' => 'required',
+            'major' => 'required',
             'lat' => 'required',
             'lng' => 'required',
             'viewname' => 'required',
@@ -113,8 +127,7 @@ class PlaceController extends Controller
             'url' => 'required',
         ]);
         $place = Attraction::find($id);
-        $place->peoplenumber = $request->get('peoplenumber');
-        $place->beaconid = $request->get('beaconid');
+        $place->beaconid = $Beaconstring;
         $place->lat = $request->get('lat');
         $place->lng = $request->get('lng');
         $place->viewname = $request->get('viewname');

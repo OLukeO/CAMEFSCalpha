@@ -51,11 +51,9 @@
                     <td>
                         <h5>景點相關超連結</h5>
                     </td>
+
                     <td>
-                        <h5>景點人數</h5>
-                    </td>
-                    <td>
-                        <h5>景點照片連結</h5>
+                        <h5>景點照片</h5>
                     </td>
                     <td colspan=2>
                         <h5>動作<a href="{{ url('places/create') }}" class="abc" style="margin:0 0 0 38%">新增</a></h5>
@@ -64,20 +62,26 @@
             </thead>
             <tbody>
                 @foreach($places as $place)
+
                 <tr>
                     <td>{{$place->viewname}}</td>
-                    <td>{{$place->note}}</td>
-                    <td>{{$place->beaconid}}</td>
-                    <td>{{$place->lat}}</td>
-                    <td>{{$place->lng}}</td>
-                    <td>{{$place->url}}</td>
-                    <td>{{$place->peoplenumber}}</td>
                     <td>
-                        <div style="word-wrap:break-word; word-break:break-all; display:block;">{{$place->image}}</div>
+                        <div style="word-wrap:break-word; word-break:break-all; display:block;">{{$place->note}}</div>
                     </td>
 
+                    <td>{{$place->beaconid}}</td>
+
+                    <td>{{$place->lat}}</td>
+                    <td>{{$place->lng}}</td>
+                    <td>
+                        <div style="word-wrap:break-word; word-break:break-all; display:block;">{{$place->url}}</div>
+                    </td>
 
                     <td>
+                        <img src="{{ $place->image}}" class="img-thumbnail" width="500" />
+                    </td>
+                    <td>
+
                         <a href="{{ route('places.edit',$place->id)}}" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
@@ -89,6 +93,7 @@
                         </form>
                     </td>
                 </tr>
+
                 @endforeach
             </tbody>
         </table>

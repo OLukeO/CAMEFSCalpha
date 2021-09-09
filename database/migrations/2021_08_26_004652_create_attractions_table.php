@@ -15,7 +15,7 @@ class CreateAttractionsTable extends Migration
     {
         Schema::create('attractions', function (Blueprint $table) {
             $table->id();
-            $table->integer('beaconid');
+            $table->Integer('beaconid');
             $table->decimal('lat', 10, 6);
             $table->decimal('lng', 10, 6);
             $table->string('viewname', 32);
@@ -23,7 +23,7 @@ class CreateAttractionsTable extends Migration
             $table->string('image', 255);
             $table->string('url', 255);
             $table->datetime('logtime')->default(now());
-            $table->integer('peoplenumber');
+            $table->Integer('peoplenumber')->default(0);
         });
     }
 

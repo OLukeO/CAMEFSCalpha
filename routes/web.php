@@ -23,9 +23,12 @@ Route::resource('beacons', 'App\Http\Controllers\IbeaconController');
 
 Route::get('/', [Controllers\AuthController::class, 'admin_login']);
 Route::post('/map', [Controllers\AuthController::class, 'do_admin_login']);
-Route::middleware('auth:sanctum')->get('/home', [Controllers\SafewayController::class, 'show']);
+Route::get('/home', [Controllers\SafewayController::class, 'show']);
 
 Route::resource('peoples', 'App\Http\Controllers\PeopleController');
+
+Route::post('chartjs', [Controllers\ChartJsController::class, 'index'])->name('chartjs.index');
+Route::get('chartjs', [Controllers\ChartJsController::class, 'index'])->name('chartjs.index');
 
 Auth::routes();
 

@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->post('/scene/{UID}', 'App\Http\Controllers\Ju
 
 Route::middleware('auth:sanctum')->get('/people', 'App\Http\Controllers\StoreController@show');
 
+Route::get('/ajax', 'App\Http\Controllers\AjaxController@index')->name('api.chart');
+
 Route::prefix('monitor')->middleware('auth:sanctum')->group(function () {
     Route::post('/start', [SafewayController::class, 'start_monitor']);
     Route::post('/end', [SafewayController::class, 'end_monitor']);

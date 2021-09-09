@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class IbeaconLocation extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $table = 'ibeacon_location';
     public $primaryKey = 'id';
 
-    protected $guarded = [
+    protected $fillable = [
         'id', 'major', 'minor', 'lat', 'lng', 'uuid',
     ];
 }

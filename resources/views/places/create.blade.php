@@ -15,6 +15,7 @@
             </div><br />
             @endif
             <form method="post" action="{{ route('places.store') }}" enctype="multipart/form-data">
+
                 @csrf
 
 
@@ -26,12 +27,28 @@
 
                 <div class="form-group">
                     <label for="input">景點介紹</label>
-                    <input type="text" class="form-control" name="note" />
+                    <textarea type="text" class="form-control" rows="3" name="note"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="input">景點對應的BeaconID</label>
-                    <input type="integer" class="form-control" name="beaconid" />
+                    <label for="input">
+                        <h3>景點對應的Major和Minor</h3>
+                    </label>
+
+                    <table class="table table-striped">
+                        <tbody>
+
+                            <select name="major" style="font-size:35px;">
+                                @foreach($beacons as $place)
+                                <option value={{$place->major}}{{$place->minor}}>
+                                    Major : {{$place->major}} ,
+                                    Minor : {{$place->minor}}
+                                </option>
+                                @endforeach
+                            </select>
+
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="form-group">
@@ -50,17 +67,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="input">景點人數</label>
-                    <input type="integer" class="form-control" name="peoplenumber" />
-                </div>
-
-                <div class="form-group">
                     <label for="input">景點照片連結</label>
                     <input type="text" class="form-control" name="image" />
+
                 </div>
 
                 <button type="submit" class="btn btn-primary-outline">確定新增</button>
             </form>
+
         </div>
     </div>
 </div>
