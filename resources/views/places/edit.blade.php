@@ -37,27 +37,116 @@
                     <tbody>
 
                         <select name="major" style="font-size:35px;">
-                            @foreach($beacons as $beacon)
-                            <option value={{$beacon->major}}{{$beacon->minor}}>
-                                Major : {{$beacon->major}} ,
-                                Minor : {{$beacon->minor}}
-                            </option>
-                            @endforeach
-                        </select>
 
+                            <option value="{{$placemajor}}{{$placeminor}}" selected>
+
+                                Major : {{$placemajor}} ,
+
+                                Minor : {{$placeminor}}
+
+                            </option>
+
+                            @foreach($beacons as $beacon)
+
+                            <option value="{{$beacon->major}}{{$beacon->minor}}">
+
+                                Major : {{$beacon->major}} ,
+
+                                Minor : {{$beacon->minor}}
+
+                            </option>
+
+                            @endforeach
+
+                        </select>
 
                     </tbody>
                 </table>
             </div>
 
+            <!--封鎖線 -->
+            <div class="main_view">
+                <div id="mapid">
+                </div>
+            </div>
+
+            <script>
+                //綁地圖
+                var lat = "{!!$place->lat!!}";
+
+                var lng = "{!!$place->lng!!}";
+                var mymap = L.map('mapid').setView([24.227565, 120.581095], 17);
+                //金鑰
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    id: 'mapbox/streets-v11',
+                }).addTo(mymap);
+
+                var marker = L.marker([lat, lng]).addTo(mymap);
+
+                var popup = L.popup();
+
+                var LeafIcon = L.Icon.extend({
+                    options: {
+                        iconSize: [20, 20],
+                    }
+                });
+
+
+                function onMapClick(e) {
+                    popup
+                        .setLatLng(e.latlng)
+                        .setContent(e.latlng.toString())
+                        .openOn(mymap);
+
+                    var latlng = e.latlng.toString();
+
+                    WriteValue(latlng);
+
+
+                    function WriteValue() {
+                        const all = latlng.split('(');
+
+                        const all2 = all[1];
+
+                        const all3 = all2.split(',');
+
+                        const major = all3[0];
+
+                        //chars3[0]
+
+                        const major1 = all3[1];
+
+                        const major2 = major1.split(' ');
+
+                        const major3 = major2[1].split(')');
+
+                        const minor = major3[0];
+
+                        //chars6[0];
+
+                        document.getElementById("lat").value = major;
+
+                        document.getElementById("lng").value = minor;
+
+                    }
+                }
+
+                mymap.on('click', onMapClick);
+
+            </script>
+            <!--封鎖線 -->
+
             <div class="form-group">
                 <label for="lat">景點緯度</label>
-                <input type="text" class="form-control" name="lat" value={{ $place->lat }} />
+                <input id="lat" type="text" class="form-control" name="lat" value={{ $place->lat }} />
             </div>
 
             <div class="form-group">
                 <label for="lng">景點經度</label>
-                <input type="text" class="form-control" name="lng" value={{ $place->lng }} />
+                <input id="lng" type="text" class="form-control" name="lng" value={{ $place->lng }} />
             </div>
 
             <div class="form-group">

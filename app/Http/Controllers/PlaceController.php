@@ -96,9 +96,22 @@ class PlaceController extends Controller
     public function edit($id)
     {
         $place = Attraction::find($id);
-        $beacons = IbeaconLocation::all();
 
-        return view('places.edit', compact('place', 'beacons'));
+        $placebeacon = DB::select("select beaconid from attractions where id=$id");
+
+        $placebeacon = implode(' ', array_column($placebeacon, 'beaconid'));
+
+        $placemajor = DB::select("select major from ibeacon_location where id=$placebeacon");
+
+        $placemajor = implode(' ', array_column($placemajor, 'major'));
+
+        $placeminor = DB::select("select minor from ibeacon_location where id=$placebeacon");
+
+        $placeminor = implode(' ', array_column($placeminor, 'minor'));
+
+        $beacons = DB::select("select * from ibeacon_location where not id=$placebeacon");
+
+        return view('places.edit', compact('place', 'beacons', 'placemajor', 'placeminor'));
     }
 
     /**
