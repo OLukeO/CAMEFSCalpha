@@ -8,6 +8,7 @@ use App\Models\Monitoring;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SafewayController extends Controller
 {
@@ -149,8 +150,10 @@ class SafewayController extends Controller
 
     public function show()
     {
-        $people = Monitoring::all();
+        $people = DB::table('monitoring')->orderBy('sos', 'desc')->get();
 
-        return view('home', compact('people'));
+        $people_reverse = DB::table('monitoring')->orderBy('sos', 'asc')->get();
+
+        return view('home', compact('people', 'people_reverse'));
     }
 }

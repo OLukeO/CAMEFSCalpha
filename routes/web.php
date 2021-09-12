@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 /*Route::get('/123', function () {
     return view('attract.create');
 });*/
-Route::get('safeway', [Controllers\safewayController::class, 'show']);
+
 Route::resource('places', 'App\Http\Controllers\PlaceController');
 Route::resource('photos', 'App\Http\Controllers\PhotoController');
 Route::resource('beacons', 'App\Http\Controllers\IbeaconController');
 
 Route::get('/', [Controllers\AuthController::class, 'admin_login']);
-Route::post('/map', [Controllers\AuthController::class, 'do_admin_login']);
+Route::post('/home', [Controllers\AuthController::class, 'do_admin_login']);
 Route::get('/home', [Controllers\SafewayController::class, 'show']);
 
 Route::resource('peoples', 'App\Http\Controllers\PeopleController');
@@ -32,4 +32,4 @@ Route::get('chartjs', [Controllers\ChartJsController::class, 'index'])->name('ch
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form action="{{ url('/map') }}" method="post">
+    <form action="{{ url('/home') }}" method="post">
         <table>
             <tr>
                 @csrf
