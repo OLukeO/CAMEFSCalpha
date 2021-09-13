@@ -105,14 +105,19 @@
                         iconUrl: "{{ asset('images/place_202109021513151497675353.png') }}"
                     });
 
-                    var i_1 = L.marker([24.225971, 120.57743], {
+                </script>
+                @foreach($beacon as $b)
+
+                <script>
+                    var i_1 = L.marker(["{!!$b->lat!!}", "{!!$b->lng!!}"], {
+
                         icon: greyIcon
-                    }).addTo(mymap);
-                    var i_2 = L.marker([24.226049, 120.577676], {
-                        icon: greyIcon
+
                     }).addTo(mymap);
 
                 </script>
+
+                @endforeach
                 @foreach($people_reverse as $p)
                 <script>
                     var lng = ["{!!$p->lng!!}"];

@@ -154,6 +154,8 @@ class SafewayController extends Controller
 
         $people_reverse = DB::table('monitoring')->orderBy('sos', 'asc')->get();
 
-        return view('safe', compact('people', 'people_reverse'));
+        $beacon = DB::select("select lat,lng from ibeacon_location where major ='50000'");
+
+        return view('safe', compact('people', 'people_reverse', 'beacon'));
     }
 }
