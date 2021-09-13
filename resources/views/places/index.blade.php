@@ -42,15 +42,6 @@
                     <td>
                         <h5>景點對應的BeaconId</h5>
                     </td>
-                    <td>
-                        <h5>景點緯度</h5>
-                    </td>
-                    <td>
-                        <h5>景點經度</h5>
-                    </td>
-                    <td>
-                        <h5>景點相關超連結</h5>
-                    </td>
 
                     <td>
                         <h5>景點照片</h5>
@@ -70,12 +61,6 @@
                     </td>
 
                     <td>{{$place->beaconid}}</td>
-
-                    <td>{{$place->lat}}</td>
-                    <td>{{$place->lng}}</td>
-                    <td>
-                        <div style="word-wrap:break-word; word-break:break-all; display:block;">{{$place->url}}</div>
-                    </td>
 
                     <td>
                         <img src="{{ $place->image}}" class="img-thumbnail" width="500" />

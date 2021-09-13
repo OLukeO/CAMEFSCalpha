@@ -30,6 +30,10 @@ Route::resource('peoples', 'App\Http\Controllers\PeopleController');
 Route::post('chartjs', [Controllers\ChartJsController::class, 'index'])->name('chartjs.index');
 Route::get('chartjs', [Controllers\ChartJsController::class, 'index'])->name('chartjs.index');
 
+Route::get('safe', function () {
+    return view('safe');
+});
+
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

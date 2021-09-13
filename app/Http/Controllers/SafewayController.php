@@ -154,6 +154,6 @@ class SafewayController extends Controller
 
         $people_reverse = DB::table('monitoring')->orderBy('sos', 'asc')->get();
 
-        return view('home', compact('people', 'people_reverse'));
+        return view('safe', compact('people', 'people_reverse'));
     }
 }

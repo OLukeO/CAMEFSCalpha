@@ -80,6 +80,6 @@ class AuthController extends Controller
         $people = DB::table('monitoring')->orderBy('sos', 'desc')->get();
         $people_reverse = DB::table('monitoring')->orderBy('sos', 'asc')->get();
 
-        return view('home', compact('people', 'people_reverse'));
+        return view('safe', compact('people', 'people_reverse'));
     }
 }
