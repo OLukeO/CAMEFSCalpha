@@ -19,7 +19,7 @@ class PlaceController extends Controller
         $places = Attraction::all();
         $beacons = IbeaconLocation::all();
 
-        return view('places.index', compact('places', 'beacons'));
+        return view('places.index1', compact('places', 'beacons'));
     }
 
     /**

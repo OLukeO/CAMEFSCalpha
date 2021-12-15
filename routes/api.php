@@ -38,4 +38,5 @@ Route::prefix('monitor')->middleware('auth:sanctum')->group(function () {
     Route::post('/end', [SafewayController::class, 'end_monitor']);
     Route::post('/sos', [SafewayController::class, 'sos']);
     Route::post('/sosend', [SafewayController::class, 'sos_end']);
+    Route::get('/show', [SafewayController::class, 'show']);
 });

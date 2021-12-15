@@ -21,6 +21,7 @@ class CreateMonitoringTable extends Migration
             $table->string('name');
             $table->decimal('lat', 10, 6);
             $table->decimal('lng', 10, 6);
+            $table->string('distance');
             $table->boolean('sos')->default('0');
         });
     }

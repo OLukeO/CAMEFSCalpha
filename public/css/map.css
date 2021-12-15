@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+/*main*/
+.main {
+    display: flex;
+}
+.main_view {
+    position: absolute;
+    width: 70%;
+    margin: 0px 20px 20px 0px;
+    right: 0px;
+}
+
+.side-menu {
+    background-color: #3188c7;
+    width: 25%;
+    margin: 20px 20px 20px 20px;
+    height: 93vh;
+}
+.side-menu .introduce {
+    padding: 10px;
+}
+
+.side-menu .introduce h4 {
+    color: #ffc001;
+    border-left: 6px solid #ffc001;
+    padding-left: 10px;
+    margin: 0px 20px 12px 20px;
+}
+
+.side-menu .introduce ul {
+    color: #fff;
+}
+
+.side-menu .introduce table {
+    background-color: #434343;
+    color: #fff;
+    margin: 10px 0 10px 0;
+    width: 100%;
+    height: 75vh;
+    overflow-y: auto;
+    display: block;
+}
+
+.side-menu .introduce table tr {
+    width: 100%;
+}
+
+.side-menu .introduce table td {
+    font-size: 2px;
+    width: 23%;
+    padding: 5px;
+}
+
+.side-menu .introduce table b {
+    font-size: 14px;
+}
+
+.side-menu .introduce table td img {
+    margin: 15px;
+    height: 10px;
+    width: 10px;
+}
+
+.side-menu .introduce table thead {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: #434343;
+}
+
+.time {
+    display: flex;
+    color: #fff;
+    padding: 5px;
+    height: 50px;
+}
+
+#mapid {
+    width: 100%;
+    height: 93vh;
+}
+
+#showbox {
+    color: #fff;
+    margin: 0 0 0 10px;
+}
+
+.left {
+    float: left;
+    width:300px;
+    height:300px;
+    background-color: red;
+}
+.right{
+    background-color: orange;
+    margin-left: 310;
+    height: 300px;
+}

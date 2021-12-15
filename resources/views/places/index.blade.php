@@ -1,9 +1,9 @@
 @extends('base')
-<link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css'>
+<!--<link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css'>-->
 @section('main')
 <div class="row">
     <div class="col-sm-12">
-        <h1 class="display-3" style="margin: 20px 0 20px 35%;">靜宜景點</h1>
+        <!-- <h1 class="display-3" style="margin: 20px 0 20px 35%;">靜宜景點</h1>-->
 
         <div class="col-sm-12">
             @if ($errors->any())
@@ -31,51 +31,15 @@
         </div>
 
         <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>
-                        <h5 style="width:100px">景點名稱</h5>
-                    </td>
-                    <td>
-                        <h5>景點介紹</h5>
-                    </td>
-                    <td>
-                        <h5>景點對應的BeaconId</h5>
-                    </td>
-
-                    <td>
-                        <h5>景點照片</h5>
-                    </td>
-                    <td colspan=2>
-                        <h5>動作<a href="{{ url('places/create') }}" class="abc" style="margin:0 0 0 38%">新增</a></h5>
-                    </td>
-                </tr>
-            </thead>
             <tbody>
                 @foreach($places as $place)
 
                 <tr>
-                    <td>{{$place->viewname}}</td>
-                    <td>
-                        <div style="word-wrap:break-word; word-break:break-all; display:block;">{{$place->note}}</div>
-                    </td>
-
-                    <td>{{$place->beaconid}}</td>
-
-                    <td>
+                    <td width="70%">
                         <img src="{{ $place->image}}" class="img-thumbnail" width="500" />
-                    </td>
-                    <td>
-
-                        <a href="{{ route('places.edit',$place->id)}}" class="btn btn-primary">Edit</a>
-                    </td>
-                    <td>
-                        <form action="{{ route('places.destroy', $place->id)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')"
-                                type="submit">Delete</button>
-                        </form>
+                        <div style="word-wrap:break-word; word-break:break-all; display:block;">{{$place->viewname}}
+                        </div>
+                        <div style="word-wrap:break-word; word-break:break-all; display:block;">{{$place->note}}</div>
                     </td>
                 </tr>
 

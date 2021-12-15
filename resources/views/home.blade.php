@@ -659,6 +659,7 @@
                 minute: "2-digit",
                 second: "2-digit"
             });
+            //RWD時使用
             document.getElementById('showbox2').innerHTML = new Date().toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: "2-digit",

@@ -12,7 +12,7 @@ class Monitoring extends Model
     protected $table = 'monitoring';
 
     protected $fillable = [
-        'uid','sidimei', 'name', 'lan', 'lng', 'sos',
+        'uid', 'sidimei', 'name', 'lat', 'lng', 'distance', 'sos',
     ];
 
     public $timestamps = false;

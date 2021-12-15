@@ -94,7 +94,6 @@
                     }
                 });
 
-
                 function onMapClick(e) {
                     popup
                         .setLatLng(e.latlng)

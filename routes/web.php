@@ -34,6 +34,15 @@ Route::get('safe', function () {
     return view('safe');
 });
 
+//即時人流網頁
+Route::get('nowpeople', function () {
+    return view('nowpeople');
+});
+
+Route::get('menu', function () {
+    return view('Menu');
+});
+
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

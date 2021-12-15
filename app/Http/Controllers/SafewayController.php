@@ -23,9 +23,8 @@ class SafewayController extends Controller
             'txpower' => 'required|string',
             //'apitoken' => 'required|string',
         ]);
-
         $user = User::where('id', $request->get('uid'))->first();
-        $ibeacon = IbeaconLocation::where('major', $request->get('major'))->first(); //改
+        $ibeacon = IbeaconLocation::where('id', $this->check_ibeacon($request->get('major'), $request->get('minor')))->first();
         $is_monitoring = Monitoring::where('uid', $request->get('uid'))->first();
 
         if (!$user || $user->role == 0) {
@@ -39,12 +38,14 @@ class SafewayController extends Controller
             $is_monitoring->update([
                 'lat' => $ibeacon['lat'],
                 'lng' => $ibeacon['lng'],
+                'distance' => $request->get('distance'),
             ]);
         } else {
             Monitoring::create([
                 'uid' => $user->id,
                 'sidimei' => $user->sidimei,
                 'name' => $user->name,
+                'distance' => $request->get('distance'),
                 'lat' => $ibeacon['lat'],
                 'lng' => $ibeacon['lng'],
             ]);
@@ -152,10 +153,25 @@ class SafewayController extends Controller
     {
         $people = DB::table('monitoring')->orderBy('sos', 'desc')->get();
 
-        $people_reverse = DB::table('monitoring')->orderBy('sos', 'asc')->get();
+        $people_reverse = DB::table('monitoring')->orderBy('sos', 'desc')->get(); //asc?
 
         $beacon = DB::select("select lat,lng from ibeacon_location where major ='50000'");
 
         return view('safe', compact('people', 'people_reverse', 'beacon'));
+
+        //return response()->json(['success' => $people]);
+        //測試資料
+    }
+
+    public function check_ibeacon($major, $minor)
+    {
+        $ibeacon = IbeaconLocation::where('major', $major)->get(); //改
+        for ($i = 0; $ibeacon; ++$i) {
+            if ($ibeacon[$i]['minor'] == $minor) {
+                return $ibeacon[$i]['id'];
+            }
+        }
+
+        return null;
     }
 }
