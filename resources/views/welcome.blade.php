@@ -24,6 +24,7 @@
             <tr>
                 <td></td>
                 <td><input type="submit" value="提交"></td>
+                <a href="{{ url('places/create') }}" class="abc" style="margin:0 0 0 38%">新增</a>
             </tr>
             </tr>
         </table>
